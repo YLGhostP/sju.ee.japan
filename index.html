@@ -5,10 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>2026日本關西滑雪八日遊</title>
     
-    <!-- 引入 Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- 引入 Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
     
     <style>
@@ -21,13 +19,26 @@
             scrollbar-width: none;
         }
         
-        /* 簡單的淡入動畫 */
+        /* 動畫定義 */
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
         .animate-fadeIn {
             animation: fadeIn 0.3s ease-out forwards;
+        }
+
+        /* Checkbox 打勾動畫 */
+        .check-transition {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        /* Sticky 效果容器 */
+        .sticky-container {
+            position: -webkit-sticky;
+            position: sticky;
+            top: 0;
+            z-index: 30;
         }
 
         body {
@@ -37,8 +48,7 @@
 </head>
 <body class="bg-gray-100 font-sans pb-20 min-h-screen">
 
-    <!-- Hero Header -->
-    <div class="bg-gradient-to-br from-slate-800 to-gray-900 text-white p-6 pb-12 rounded-b-[2rem] shadow-xl relative overflow-hidden">
+    <div class="bg-gradient-to-br from-slate-800 to-gray-900 text-white p-6 pb-12 rounded-b-[2rem] shadow-xl relative overflow-hidden z-0">
         <div class="absolute top-0 right-0 opacity-5 transform translate-x-10 -translate-y-10">
             <i data-lucide="plane" width="240" height="240"></i>
         </div>
@@ -53,48 +63,30 @@
         </div>
     </div>
 
-    <!-- Main Content Area -->
-    <div class="max-w-md mx-auto -mt-8 px-4">
+    <div class="max-w-md mx-auto -mt-8 px-4 relative z-10">
         
-        <!-- Navigation Tabs -->
-        <div class="flex bg-white rounded-lg p-1 shadow-sm mb-6 relative z-20 border border-gray-200">
-            <button id="tab-itinerary" onclick="switchTab('itinerary')" class="flex-1 py-2 text-sm font-bold rounded transition-all bg-slate-800 text-white shadow-sm">
-                行程表
+        <div class="flex bg-white rounded-lg p-1 shadow-md mb-6 border border-gray-200">
+            <button id="tab-itinerary" onclick="switchTab('itinerary')" class="flex-1 py-2 text-sm font-bold rounded transition-all bg-slate-800 text-white shadow-sm flex items-center justify-center">
+                <i data-lucide="calendar" class="w-4 h-4 mr-2"></i> 行程表
             </button>
-            <button id="tab-notices" onclick="switchTab('notices')" class="flex-1 py-2 text-sm font-bold rounded transition-all text-gray-500 hover:bg-gray-50 flex items-center justify-center">
-                <i data-lucide="message-circle" class="w-4 h-4 mr-2"></i>
-                即時公告
-                <span id="notice-badge" class="ml-2 w-1.5 h-1.5 bg-sky-500 rounded-full hidden"></span>
+            <button id="tab-checklist" onclick="switchTab('checklist')" class="flex-1 py-2 text-sm font-bold rounded transition-all text-gray-500 hover:bg-gray-50 flex items-center justify-center">
+                <i data-lucide="clipboard-check" class="w-4 h-4 mr-2"></i> 行前清單
+                <span id="checklist-badge" class="ml-2 px-1.5 py-0.5 text-[10px] bg-red-500 text-white rounded-full hidden">0</span>
             </button>
         </div>
 
-        <!-- Content Container -->
         <div id="app-content">
-            <!-- Content will be injected here by JavaScript -->
-        </div>
+            </div>
 
-        <!-- Important Info (Static footer for Notices tab) -->
-        <div id="important-info" class="hidden mt-4 p-5 bg-white rounded-lg border border-slate-200 shadow-sm animate-fadeIn">
-            <h4 class="font-bold text-gray-800 mb-3 flex items-center uppercase text-xs tracking-wider border-b border-gray-100 pb-2">
-                <i data-lucide="alert-circle" class="w-4 h-4 mr-2 text-slate-600"></i>
-                Important Information
-            </h4>
-            <ul class="text-sm text-gray-600 space-y-3 pl-1">
-                <li class="flex items-start"><span class="w-1.5 h-1.5 bg-slate-400 rounded-full mt-1.5 mr-2 flex-shrink-0"></span>緊急聯絡：+81-90-XXXX-XXXX (導遊)</li>
-                <li class="flex items-start"><span class="w-1.5 h-1.5 bg-slate-400 rounded-full mt-1.5 mr-2 flex-shrink-0"></span>飯店 Wifi：OsakaHotel / 12345678</li>
-                <li class="flex items-start"><span class="w-1.5 h-1.5 bg-slate-400 rounded-full mt-1.5 mr-2 flex-shrink-0"></span>匯率參考：1 TWD ≈ 4.5 JPY</li>
-            </ul>
-        </div>
     </div>
 
     <div class="h-10"></div>
 
-    <!-- Edit Modal -->
-    <div id="edit-modal" class="hidden fixed inset-0 bg-slate-900/80 z-50 flex items-center justify-center p-4 backdrop-blur-sm">
-        <div class="bg-white w-full max-w-sm rounded-lg p-6 shadow-2xl transform transition-all scale-100">
+    <div id="edit-modal" class="hidden fixed inset-0 bg-slate-900/80 z-50 flex items-center justify-center p-4 backdrop-blur-sm transition-opacity">
+        <div class="bg-white w-full max-w-sm rounded-lg p-6 shadow-2xl transform transition-all scale-100 animate-fadeIn">
             <div class="flex justify-between items-center mb-5">
-                <h3 class="font-bold text-lg text-gray-900">編輯備註</h3>
-                <button onclick="closeModal()" class="text-gray-400 hover:text-gray-600">
+                <h3 class="font-bold text-lg text-gray-900">編輯行程備註</h3>
+                <button onclick="closeModal()" class="text-gray-400 hover:text-gray-600 p-1">
                     <i data-lucide="x" class="w-6 h-6"></i>
                 </button>
             </div>
@@ -111,9 +103,8 @@
         </div>
     </div>
 
-    <!-- JavaScript Logic -->
     <script>
-        // --- 初始資料 ---
+        // --- 初始資料 (行程表) ---
         const INITIAL_ITINERARY = [
             {
                 id: 1,
@@ -137,7 +128,7 @@
                 title: '京都 (負責：宜先)',
                 location: '京都 (Kyoto)',
                 mapLocation: '京都車站',
-                icon: 'map-pin', // Changed 'temple' to 'map-pin' for lucide mapping
+                icon: 'map-pin',
                 activities: [
                     { time: '待定', desc: '行程待確認' }
                 ],
@@ -150,7 +141,7 @@
                 title: '神戶 (負責：又霖)',
                 location: '神戶三宮 / 南京町',
                 mapLocation: '神戶南京町',
-                icon: 'utensils', // Changed 'beef'
+                icon: 'utensils',
                 activities: [
                     { time: '上午', desc: '飯店出發' },
                     { time: '11:00', desc: '神戶三宮' },
@@ -167,7 +158,7 @@
                 title: '奈良 (負責：偉進)',
                 location: '奈良 (Nara)',
                 mapLocation: '奈良市北小路町7',
-                icon: 'users', // Changed 'deer'
+                icon: 'users',
                 activities: [
                     { time: '10:00', desc: '飯店出發' },
                     { time: '10:45', desc: '奈良公園摸鹿' },
@@ -184,7 +175,7 @@
                 title: '滑雪日',
                 location: '六甲山滑雪場',
                 mapLocation: '六甲山滑雪場',
-                icon: 'snowflake', // Changed 'snow'
+                icon: 'snowflake',
                 activities: [
                     { time: '10:00', desc: '飯店出發' },
                     { time: '10:30', desc: '經由日本橋' },
@@ -200,7 +191,7 @@
                 title: '大阪歷史與文化 (負責：劉毅安)',
                 location: '大阪城 / 通天閣',
                 mapLocation: '大阪城天守閣',
-                icon: 'map-pin', // Changed 'city'
+                icon: 'map-pin',
                 activities: [
                     { time: '09:00', desc: '大阪城、豐國神社' },
                     { time: '10:30', desc: '玉造稻荷神社' },
@@ -217,7 +208,7 @@
                 title: '大阪市區漫遊 (負責：少倫)',
                 location: '天王寺 / 道頓堀',
                 mapLocation: '道頓堀固力果跑跑人',
-                icon: 'shopping-bag', // Changed 'shopping'
+                icon: 'shopping-bag',
                 activities: [
                     { time: '上午', desc: '飯店出發' },
                     { time: '10:00', desc: '天王寺動物園' },
@@ -247,21 +238,32 @@
             }
         ];
 
-        // --- State Management (using localStorage) ---
+        // --- 初始資料 (待辦清單) ---
+        const INITIAL_CHECKLIST = [
+            { id: 1, text: '護照 (有效期6個月以上)', checked: false },
+            { id: 2, text: 'Visit Japan Web 填寫', checked: false },
+            { id: 3, text: '日幣現金 / 信用卡', checked: false },
+            { id: 4, text: 'SIM 卡 / 漫遊開通', checked: false },
+            { id: 5, text: '滑雪防水手套', checked: false },
+            { id: 6, text: '個人常備藥品', checked: false }
+        ];
+
+        // --- 狀態管理 (使用 LocalStorage) ---
         let state = {
             currentTab: 'itinerary',
             selectedDayId: 1,
             itinerary: JSON.parse(localStorage.getItem('trip_itinerary')) || INITIAL_ITINERARY,
-            notices: JSON.parse(localStorage.getItem('trip_notices')) || []
+            checklist: JSON.parse(localStorage.getItem('trip_checklist')) || INITIAL_CHECKLIST
         };
 
         let editingDayId = null;
 
-        // --- Functions ---
+        // --- 主程式邏輯 ---
 
         function init() {
             renderContent();
             updateTabStyles();
+            updateChecklistBadge();
             lucide.createIcons();
         }
 
@@ -269,30 +271,23 @@
             state.currentTab = tab;
             renderContent();
             updateTabStyles();
-            
-            // Toggle Important Info visibility
-            const infoDiv = document.getElementById('important-info');
-            if (tab === 'notices') {
-                infoDiv.classList.remove('hidden');
-            } else {
-                infoDiv.classList.add('hidden');
-            }
+            updateChecklistBadge();
         }
 
         function updateTabStyles() {
             const tabItinerary = document.getElementById('tab-itinerary');
-            const tabNotices = document.getElementById('tab-notices');
+            const tabChecklist = document.getElementById('tab-checklist');
             const activeClass = ['bg-slate-800', 'text-white', 'shadow-sm'];
             const inactiveClass = ['text-gray-500', 'hover:bg-gray-50'];
 
             if (state.currentTab === 'itinerary') {
                 tabItinerary.classList.add(...activeClass);
                 tabItinerary.classList.remove(...inactiveClass);
-                tabNotices.classList.remove(...activeClass);
-                tabNotices.classList.add(...inactiveClass);
+                tabChecklist.classList.remove(...activeClass);
+                tabChecklist.classList.add(...inactiveClass);
             } else {
-                tabNotices.classList.add(...activeClass);
-                tabNotices.classList.remove(...inactiveClass);
+                tabChecklist.classList.add(...activeClass);
+                tabChecklist.classList.remove(...inactiveClass);
                 tabItinerary.classList.remove(...activeClass);
                 tabItinerary.classList.add(...inactiveClass);
             }
@@ -302,13 +297,13 @@
             state.selectedDayId = id;
             renderItinerary();
             
-            // Scroll to center button logic (simplified)
+            // 優化滑動體驗：平滑捲動到選中的日期
             setTimeout(() => {
                 const btn = document.getElementById(`day-btn-${id}`);
                 if(btn) {
                     btn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
                 }
-            }, 100);
+            }, 50);
         }
 
         function getMapQuery(day) {
@@ -323,7 +318,7 @@
             if (state.currentTab === 'itinerary') {
                 renderItinerary();
             } else {
-                renderNotices();
+                renderChecklist();
             }
             lucide.createIcons();
         }
@@ -333,82 +328,83 @@
             const day = state.itinerary.find(d => d.id === state.selectedDayId);
             const mapQuery = getMapQuery(day);
 
-            // 1. Day Selector HTML
+            // 1. 日期選擇器 (Sticky 效果)
             let daysHtml = `
-                <div class="mb-4">
-                    <div class="flex overflow-x-auto space-x-2 pb-2 scrollbar-hide -mx-2 px-2" style="scrollbar-width: none; -ms-overflow-style: none;">
+                <div class="sticky-container bg-gray-100/95 backdrop-blur-sm pt-4 pb-4 -mt-2 mb-2">
+                    <div class="flex overflow-x-auto space-x-3 pb-2 scrollbar-hide -mx-2 px-2 snap-x scroll-smooth" style="scrollbar-width: none;">
                         ${state.itinerary.map(d => `
                             <button id="day-btn-${d.id}" onclick="selectDay(${d.id})" 
-                                class="flex-shrink-0 flex flex-col items-center justify-center w-16 h-16 rounded-lg border transition-all duration-300 ${state.selectedDayId === d.id ? 'bg-slate-800 border-slate-800 text-white shadow-lg transform scale-105' : 'bg-white border-gray-200 text-gray-400 hover:border-slate-300'}">
-                                <span class="text-xs font-bold uppercase mb-1">Day ${d.id}</span>
-                                <span class="text-sm font-bold ${state.selectedDayId === d.id ? 'text-sky-400' : 'text-gray-800'}">${d.date.split('-')[2]}</span>
+                                class="snap-center flex-shrink-0 flex flex-col items-center justify-center w-16 h-16 rounded-xl border transition-all duration-300 ${state.selectedDayId === d.id ? 'bg-slate-800 border-slate-800 text-white shadow-lg transform scale-105' : 'bg-white border-gray-200 text-gray-400 hover:border-slate-300'}">
+                                <span class="text-[10px] font-bold uppercase mb-1 opacity-80">Day ${d.id}</span>
+                                <span class="text-lg font-bold ${state.selectedDayId === d.id ? 'text-sky-400' : 'text-gray-800'}">${d.date.split('-')[2]}</span>
                             </button>
                         `).join('')}
                     </div>
                 </div>
             `;
 
-            // 2. Day Card HTML
+            // 2. 行程卡片
             let activitiesHtml = day.activities.map(act => `
-                <div class="relative">
-                    <div class="absolute -left-[21px] top-1.5 w-3 h-3 rounded-full bg-slate-400 border-2 border-white"></div>
-                    <p class="text-gray-700 text-sm leading-relaxed"><span class="font-bold text-gray-900 mr-3 font-mono">${act.time}</span> ${act.desc}</p>
+                <div class="relative pl-6 pb-6 last:pb-0 border-l-2 border-slate-200 last:border-transparent ml-2 group">
+                    <div class="absolute -left-[7px] top-1.5 w-3.5 h-3.5 rounded-full bg-slate-800 border-2 border-white shadow-sm z-10 group-hover:scale-125 transition-transform"></div>
+                    <div class="flex flex-col sm:flex-row sm:items-baseline">
+                        <span class="font-mono text-sm font-bold text-slate-800 w-16 mb-1 sm:mb-0 flex-shrink-0">${act.time}</span>
+                        <p class="text-gray-700 text-sm leading-relaxed">${act.desc}</p>
+                    </div>
                 </div>
             `).join('');
 
             let cardHtml = `
-                <div class="animate-fadeIn transition-all duration-300">
-                    <div class="relative bg-white rounded-lg shadow-sm overflow-hidden border-l-4 border-slate-600 mb-6 transition-all hover:shadow-md">
-                        <div class="p-5">
-                            <div class="flex justify-between items-start mb-4">
-                                <div class="flex items-center space-x-3">
-                                    <div class="p-2 rounded bg-slate-100 text-slate-700">
+                <div class="animate-fadeIn">
+                    <div class="bg-white rounded-2xl shadow-sm overflow-hidden mb-6 border border-gray-100">
+                        <div class="p-6 pb-4 bg-gradient-to-r from-white to-gray-50 border-b border-gray-100">
+                            <div class="flex justify-between items-start">
+                                <div class="flex items-center space-x-4">
+                                    <div class="p-3 rounded-xl bg-slate-100 text-slate-700 shadow-inner">
                                         <i data-lucide="${day.icon}" class="w-6 h-6"></i>
                                     </div>
                                     <div>
-                                        <h3 class="text-xl font-bold text-gray-900 tracking-tight">${day.date} (${day.dayOfWeek})</h3>
+                                        <h3 class="text-xl font-bold text-gray-900 tracking-tight leading-tight mb-1">${day.date} (${day.dayOfWeek})</h3>
                                         <p class="text-sm text-gray-500 font-medium">${day.title} • ${day.location}</p>
                                     </div>
                                 </div>
-                                <div class="text-xs font-bold px-2 py-1 bg-gray-200 rounded text-gray-600 uppercase tracking-wider">Day ${day.id}</div>
+                                <div class="text-xs font-bold px-2 py-1 bg-slate-800 text-white rounded-full uppercase tracking-wider">Day ${day.id}</div>
                             </div>
+                        </div>
 
-                            <div class="space-y-4 relative pl-4 border-l-2 border-slate-200 ml-3">
+                        <div class="p-6 pt-6">
+                            <div class="mb-6">
                                 ${activitiesHtml}
                             </div>
 
-                            <div class="mt-6 mb-2">
-                                <div class="flex items-center mb-2 text-xs font-bold text-gray-500 uppercase tracking-wider">
-                                    <i data-lucide="map" class="w-3 h-3 mr-1"></i> Location Map
+                            <div class="rounded-xl overflow-hidden border border-gray-200 shadow-sm relative group">
+                                <div class="absolute top-2 right-2 bg-white/90 backdrop-blur px-2 py-1 text-[10px] font-bold rounded text-gray-500 z-10 pointer-events-none shadow-sm flex items-center">
+                                    <i data-lucide="map" class="w-3 h-3 mr-1"></i> ${day.location}
                                 </div>
-                                <div class="w-full h-48 bg-gray-100 rounded-lg overflow-hidden border border-gray-200 shadow-inner">
-                                    <iframe width="100%" height="100%" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" 
-                                        src="https://maps.google.com/maps?q=${encodeURIComponent(mapQuery)}&t=&z=13&ie=UTF8&iwloc=&output=embed">
-                                    </iframe>
-                                </div>
+                                <iframe width="100%" height="180" frameborder="0" style="border:0; filter: grayscale(20%) contrast(1.1);"
+                                    src="https://maps.google.com/maps?q=${encodeURIComponent(mapQuery)}&t=&z=14&ie=UTF8&iwloc=&output=embed">
+                                </iframe>
                             </div>
+                        </div>
 
-                            <div class="mt-5 pt-4 border-t border-gray-100">
-                                <div class="flex justify-between items-center group">
-                                    <p class="text-sm text-gray-600 bg-gray-50 p-3 rounded-md w-full border border-gray-200 flex items-start">
-                                        <i data-lucide="info" class="w-4 h-4 mr-2 text-slate-500 flex-shrink-0 mt-0.5"></i>
-                                        <span><span class="font-semibold text-gray-800">備註：</span>${day.note || "暫無備註"}</span>
-                                    </p>
-                                    <button onclick="openModal(${day.id})" class="ml-2 text-gray-400 hover:text-sky-600 transition-opacity">
-                                        <i data-lucide="edit-3" class="w-4 h-4"></i>
-                                    </button>
-                                </div>
+                        <div class="bg-slate-50 p-4 border-t border-gray-100 flex items-start gap-3">
+                            <i data-lucide="info" class="w-4 h-4 text-slate-400 mt-0.5 flex-shrink-0"></i>
+                            <div class="flex-1">
+                                <span class="text-xs font-bold text-slate-500 uppercase tracking-wide block mb-1">備註 Note</span>
+                                <p class="text-sm text-slate-700">${day.note || "暫無備註"}</p>
                             </div>
+                            <button onclick="openModal(${day.id})" class="p-2 text-slate-400 hover:text-sky-600 hover:bg-white rounded-full transition-all">
+                                <i data-lucide="edit-3" class="w-4 h-4"></i>
+                            </button>
                         </div>
                     </div>
 
-                    <!-- Pagination -->
-                    <div class="flex justify-between mt-2 px-2">
-                        <button onclick="selectDay(${Math.max(1, day.id - 1)})" ${day.id === 1 ? 'disabled class="flex items-center text-sm font-bold text-gray-300 cursor-not-allowed"' : 'class="flex items-center text-sm font-bold text-slate-600 hover:text-slate-800"'}>
-                            <i data-lucide="chevron-left" class="w-4 h-4 mr-1"></i> Prev Day
+                    <div class="flex justify-between items-center px-2 pb-8">
+                        <button onclick="selectDay(${Math.max(1, day.id - 1)})" ${day.id === 1 ? 'disabled class="opacity-30 cursor-not-allowed px-4 py-2"' : 'class="group flex items-center text-sm font-bold text-slate-600 hover:text-slate-800 bg-white px-4 py-2 rounded-full shadow-sm hover:shadow transition-all"'} >
+                            <i data-lucide="arrow-left" class="w-4 h-4 mr-2 transition-transform group-hover:-translate-x-1"></i> Prev
                         </button>
-                        <button onclick="selectDay(${Math.min(state.itinerary.length, day.id + 1)})" ${day.id === state.itinerary.length ? 'disabled class="flex items-center text-sm font-bold text-gray-300 cursor-not-allowed"' : 'class="flex items-center text-sm font-bold text-slate-600 hover:text-slate-800"'}>
-                            Next Day <i data-lucide="chevron-right" class="w-4 h-4 ml-1"></i>
+                        <button onclick="selectDay(${Math.min(state.itinerary.length, day.id + 1)})" ${day.id === state.itinerary.length ? 'disabled class="opacity-30 cursor-not-allowed px-4 py-2"' : 'class="group flex items-center text-sm font-bold text-slate-600 hover:text-slate-800 bg-white px-4 py-2 rounded-full shadow-sm hover:shadow transition-all"'} >
+                            Next <i data-lucide="arrow-right" class="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1"></i>
                         </button>
                     </div>
                 </div>
@@ -418,83 +414,146 @@
             lucide.createIcons();
         }
 
-        function renderNotices() {
+        // --- 待辦清單邏輯 ---
+
+        function renderChecklist() {
             const container = document.getElementById('app-content');
             
-            let noticesHtml = `
-                <div class="bg-white rounded-lg shadow-md overflow-hidden flex flex-col h-[500px] border border-gray-200 animate-fadeIn">
-                    <div class="p-4 bg-gray-800 text-white flex justify-between items-center">
-                        <h3 class="font-bold flex items-center tracking-wide"><i data-lucide="message-circle" class="w-5 h-5 mr-2"></i> 即時公告</h3>
-                        <div class="flex items-center space-x-2">
-                            <span class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
-                            <span class="text-xs text-gray-300 font-mono">LIVE</span>
+            const total = state.checklist.length;
+            const checked = state.checklist.filter(i => i.checked).length;
+            const progress = total === 0 ? 0 : Math.round((checked / total) * 100);
+
+            let listHtml = `
+                <div class="animate-fadeIn pb-10">
+                    <div class="bg-gradient-to-r from-slate-800 to-slate-700 rounded-2xl p-6 text-white shadow-lg mb-6 relative overflow-hidden">
+                        <div class="absolute right-0 top-0 opacity-10">
+                            <i data-lucide="clipboard-list" width="120" height="120"></i>
+                        </div>
+                        <div class="relative z-10">
+                            <div class="flex justify-between items-end mb-2">
+                                <h3 class="font-bold text-lg tracking-wide">行前準備進度</h3>
+                                <span class="font-mono text-2xl font-bold text-sky-400">${progress}%</span>
+                            </div>
+                            <div class="w-full bg-slate-600 rounded-full h-2.5 mb-1 overflow-hidden">
+                                <div class="bg-sky-400 h-2.5 rounded-full transition-all duration-500 ease-out" style="width: ${progress}%"></div>
+                            </div>
+                            <p class="text-xs text-slate-400 text-right mt-1">已完成 ${checked} / ${total} 項</p>
                         </div>
                     </div>
-                    
-                    <div id="notice-list" class="flex-1 overflow-y-auto p-4 space-y-4 bg-gray-50">
-                        ${state.notices.length === 0 ? `
-                            <div class="text-center text-gray-400 mt-10">
-                                <p class="font-medium">目前沒有公告</p>
-                                <p class="text-xs mt-1">請在此發布重要集合資訊</p>
-                            </div>
-                        ` : state.notices.map(notice => `
-                            <div class="flex flex-col ${notice.type === 'system' ? 'items-center' : 'items-end'}">
-                                <div class="max-w-[85%] rounded-lg px-4 py-3 shadow-sm text-sm ${
-                                    notice.type === 'system' ? 'bg-amber-50 text-amber-800 border border-amber-100 text-center w-full my-2' : 
-                                    'bg-slate-700 text-white'
-                                }">
-                                    ${notice.text}
-                                </div>
-                                ${notice.type !== 'system' ? `<span class="text-[10px] text-gray-400 mt-1 mx-1 font-mono">${new Date(notice.timestamp).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</span>` : ''}
-                            </div>
-                        `).join('')}
-                    </div>
 
-                    <form onsubmit="addNotice(event)" class="p-3 bg-white border-t border-gray-200 flex gap-2">
-                        <input id="notice-input" type="text" placeholder="輸入訊息..." class="flex-1 px-4 py-2 bg-gray-100 border border-transparent rounded focus:outline-none focus:bg-white focus:ring-1 focus:ring-slate-500 text-sm transition-all" />
-                        <button type="submit" class="bg-slate-800 text-white p-2 rounded hover:bg-slate-700 transition-colors">
-                            <i data-lucide="send" class="w-5 h-5"></i>
-                        </button>
-                    </form>
+                    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden flex flex-col min-h-[300px]">
+                         <div class="p-4 bg-gray-50 border-b border-gray-100 flex items-center justify-between sticky top-0 z-10">
+                            <h4 class="font-bold text-gray-700 flex items-center">
+                                <i data-lucide="check-circle-2" class="w-4 h-4 mr-2 text-slate-500"></i>
+                                待辦項目
+                            </h4>
+                         </div>
+
+                         <div id="checklist-container" class="divide-y divide-gray-100 flex-1">
+                            ${state.checklist.length === 0 ? `
+                                <div class="p-10 text-center text-gray-400 flex flex-col items-center justify-center h-full">
+                                    <div class="bg-gray-100 p-4 rounded-full mb-3">
+                                        <i data-lucide="clipboard" class="w-8 h-8 opacity-40"></i>
+                                    </div>
+                                    <p class="text-sm">目前沒有待辦事項</p>
+                                    <p class="text-xs mt-1 opacity-60">下方新增您的第一個任務！</p>
+                                </div>
+                            ` : state.checklist.map(item => `
+                                <div class="group flex items-center p-4 hover:bg-gray-50 transition-colors cursor-pointer select-none" onclick="toggleChecklistItem(${item.id})">
+                                    <div class="relative flex items-center justify-center w-6 h-6 mr-4 flex-shrink-0">
+                                        <input type="checkbox" ${item.checked ? 'checked' : ''} class="peer appearance-none w-6 h-6 border-2 border-gray-300 rounded-lg checked:bg-sky-500 checked:border-sky-500 transition-all cursor-pointer">
+                                        <i data-lucide="check" class="absolute w-4 h-4 text-white opacity-0 peer-checked:opacity-100 pointer-events-none transition-opacity"></i>
+                                    </div>
+                                    <span class="flex-1 text-sm font-medium check-transition ${item.checked ? 'text-gray-400 line-through decoration-gray-300' : 'text-gray-700'}">
+                                        ${item.text}
+                                    </span>
+                                    <button onclick="deleteChecklistItem(event, ${item.id})" class="p-2 text-gray-300 hover:text-red-500 transition-colors opacity-0 group-hover:opacity-100">
+                                        <i data-lucide="trash-2" class="w-4 h-4"></i>
+                                    </button>
+                                </div>
+                            `).join('')}
+                         </div>
+
+                         <form onsubmit="addChecklistItem(event)" class="p-4 bg-gray-50 border-t border-gray-100 mt-auto">
+                            <div class="flex gap-2 relative">
+                                <input id="checklist-input" type="text" placeholder="新增事項 (例如: 帶行動電源)..." 
+                                    class="flex-1 pl-4 pr-10 py-3 bg-white border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-slate-800 focus:border-transparent text-sm shadow-sm transition-all placeholder-gray-400">
+                                <button type="submit" class="absolute right-2 top-2 p-1.5 bg-slate-800 text-white rounded-lg hover:bg-slate-700 transition-colors shadow-sm">
+                                    <i data-lucide="plus" class="w-4 h-4"></i>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             `;
             
-            container.innerHTML = noticesHtml;
-            // Scroll to bottom
-            const list = document.getElementById('notice-list');
-            if(list) list.scrollTop = list.scrollHeight;
+            container.innerHTML = listHtml;
             lucide.createIcons();
+            updateChecklistBadge();
         }
 
-        function addNotice(e) {
+        function toggleChecklistItem(id) {
+            const item = state.checklist.find(i => i.id === id);
+            if (item) {
+                item.checked = !item.checked;
+                saveChecklist();
+                renderChecklist();
+            }
+        }
+
+        function addChecklistItem(e) {
             e.preventDefault();
-            const input = document.getElementById('notice-input');
+            const input = document.getElementById('checklist-input');
             const text = input.value.trim();
             if (!text) return;
 
-            const newNotice = {
+            const newItem = {
                 id: Date.now(),
                 text: text,
-                timestamp: new Date().toISOString(),
-                type: 'user',
-                userId: 'current-user'
+                checked: false
             };
 
-            state.notices.push(newNotice);
-            localStorage.setItem('trip_notices', JSON.stringify(state.notices));
+            state.checklist.push(newItem);
+            saveChecklist();
             
             input.value = '';
-            renderNotices();
+            renderChecklist();
         }
 
-        // --- Modal Logic ---
+        function deleteChecklistItem(e, id) {
+            e.stopPropagation(); // 防止觸發勾選
+            if(confirm('確定要刪除這個項目嗎？')) {
+                state.checklist = state.checklist.filter(i => i.id !== id);
+                saveChecklist();
+                renderChecklist();
+            }
+        }
+
+        function saveChecklist() {
+            localStorage.setItem('trip_checklist', JSON.stringify(state.checklist));
+            updateChecklistBadge();
+        }
+
+        function updateChecklistBadge() {
+            const incompleteCount = state.checklist.filter(i => !i.checked).length;
+            const badge = document.getElementById('checklist-badge');
+            if (badge) {
+                if (incompleteCount > 0) {
+                    badge.innerText = incompleteCount;
+                    badge.classList.remove('hidden');
+                } else {
+                    badge.classList.add('hidden');
+                }
+            }
+        }
+
+        // --- 共用邏輯 ---
 
         function openModal(dayId) {
             editingDayId = dayId;
             const day = state.itinerary.find(d => d.id === dayId);
             document.getElementById('modal-date').innerText = day.date;
             document.getElementById('modal-textarea').value = day.note || "";
-            
             document.getElementById('edit-modal').classList.remove('hidden');
         }
 
@@ -507,32 +566,15 @@
             if (!editingDayId) return;
             const newNote = document.getElementById('modal-textarea').value;
             const dayIndex = state.itinerary.findIndex(d => d.id === editingDayId);
-            const dayDate = state.itinerary[dayIndex].date;
-
-            // Update Note
+            
             state.itinerary[dayIndex].note = newNote;
             localStorage.setItem('trip_itinerary', JSON.stringify(state.itinerary));
 
-            // Add System Notice
-            const systemNotice = {
-                id: Date.now(),
-                text: `行程更新：${dayDate} 的備註已修改。`,
-                timestamp: new Date().toISOString(),
-                type: 'system'
-            };
-            state.notices.push(systemNotice);
-            localStorage.setItem('trip_notices', JSON.stringify(state.notices));
-
             closeModal();
             renderContent();
-            
-            // Show badge on notices tab if not active
-            if (state.currentTab !== 'notices') {
-                document.getElementById('notice-badge').classList.remove('hidden');
-            }
         }
 
-        // --- Run Init ---
+        // --- 啟動 ---
         init();
 
     </script>
