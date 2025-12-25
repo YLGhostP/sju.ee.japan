@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>2026日本關西滑雪八日遊</title>
+    <title>2026日本關西八日遊 (Osaka/Kyoto/Kobe)</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
     
@@ -59,7 +59,7 @@
                 <span>8 Days Trip</span>
             </div>
             <h1 class="text-3xl font-extrabold mb-2 tracking-tight">日本關西滑雪之旅 <span class="text-sky-500">.</span></h1>
-            <p className="text-gray-400 text-sm font-medium">Osaka • Kyoto • Kobe • Nara</p>
+            <p class="text-gray-400 text-sm font-medium">Osaka • Kyoto • Kobe • Arashiyama</p>
         </div>
     </div>
 
@@ -104,7 +104,7 @@
     </div>
 
     <script>
-        // --- 初始資料 (行程表) ---
+        // --- 初始資料 (行程表) - 更新版 v3 ---
         const INITIAL_ITINERARY = [
             {
                 id: 1,
@@ -117,62 +117,75 @@
                 activities: [
                     { time: '15:40', desc: '台灣桃園國際機場起飛' },
                     { time: '19:20', desc: '抵達關西機場 (KIX)' },
-                    { time: '21:00', desc: '前往路得會飯店 Check-in' }
+                    { time: '21:00', desc: '路得會飯店 Check-in' }
                 ],
-                note: '記得先填寫 Visit Japan Web。飯店地址：大阪市中央区谷町3-1-6。'
+                note: '飯店：大阪路得會飯店 (Hotel The Lutheran)。地址：大阪市中央区谷町3-1-6。'
             },
             {
                 id: 2,
                 date: '2026-01-31',
                 dayOfWeek: '六',
-                title: '京都 (負責：宜先)',
-                location: '京都 (Kyoto)',
-                mapLocation: '京都車站',
-                icon: 'map-pin',
+                title: '京都文化巡禮 (負責：宜先)',
+                location: '京都 (下鴨 / 清水寺 / 祇園)',
+                mapLocation: '清水寺',
+                icon: 'camera',
                 activities: [
-                    { time: '待定', desc: '行程待確認' }
+                    { time: '08:00', desc: '飯店出發' },
+                    { time: '09:18', desc: '糺之森 (Tadasu no Mori)' },
+                    { time: '09:45', desc: '下鴨神社' },
+                    { time: '11:29', desc: '和服租借 (梨花和服 清水寺店)' },
+                    { time: '12:37', desc: '清水寺參拜' },
+                    { time: '14:18', desc: 'Kyo Unawa Honten (鰻魚飯)' },
+                    { time: '15:33', desc: '鍵善良房 (四條本店) 吃甜點' },
+                    { time: '15:44', desc: '花見小路（南側）' },
+                    { time: '17:59', desc: '建仁寺' },
+                    { time: '18:32', desc: '京都祇園彌榮會館' }
                 ],
-                note: '穿好走的鞋子，京都走路行程多。'
+                note: '今日時間點安排較細，請留意交通銜接。'
             },
             {
                 id: 3,
                 date: '2026-02-01',
                 dayOfWeek: '日',
-                title: '神戶 (負責：又霖)',
+                title: '神戶異國風情 (負責：又霖)',
                 location: '神戶三宮 / 南京町',
                 mapLocation: '神戶南京町',
                 icon: 'utensils',
                 activities: [
                     { time: '上午', desc: '飯店出發' },
                     { time: '11:00', desc: '神戶三宮' },
-                    { time: '12:30', desc: '南京町 (中華街)' },
-                    { time: '14:30', desc: '生田神社' },
+                    { time: '12:00', desc: '南京町 (中華街) 吃午餐' },
+                    { time: '14:00', desc: '生田神社' },
                     { time: '17:00', desc: '神戶牛大餐' }
                 ],
-                note: '神戶牛、中華街美食探索。'
+                note: '南京町小吃多，建議留點胃口給晚上的神戶牛。'
             },
             {
                 id: 4,
                 date: '2026-02-02',
                 dayOfWeek: '一',
-                title: '奈良 (負責：偉進)',
-                location: '奈良 (Nara)',
-                mapLocation: '奈良市北小路町7',
-                icon: 'users',
+                title: '嵐山漫遊 & 溫泉美食 (負責：偉進/竟豪)',
+                location: '嵐山 / 大阪市區',
+                mapLocation: '嵐山竹林小徑',
+                icon: 'mountain',
                 activities: [
-                    { time: '10:00', desc: '飯店出發' },
-                    { time: '10:45', desc: '奈良公園摸鹿' },
-                    { time: '11:30', desc: '慈眼寺 (奈良市北小路町7)' },
-                    { time: '14:00', desc: '泡澡 / 溫泉體驗' },
-                    { time: '18:00', desc: '帝王蟹大餐' }
+                    { time: '08:00', desc: '大阪出發' },
+                    { time: '09:30', desc: '抵達嵐山' },
+                    { time: '09:45', desc: '天龍寺參觀' },
+                    { time: '10:30', desc: '竹林小徑 ➔ 野宮神社' },
+                    { time: '11:30', desc: '午餐 (嵐山よしむら蕎麥麵 或 鯛匠HANANA)' },
+                    { time: '12:30', desc: '嵐山猴子公園' },
+                    { time: '13:00', desc: '準備返回大阪' },
+                    { time: '下午', desc: '空庭溫泉 (大阪灣塔)' },
+                    { time: '晚上', desc: '帝王蟹大餐 (北堀江)' }
                 ],
-                note: '慈眼寺預約確認：11:30 AM。小心鹿咬人。'
+                note: '溫泉地址：港區弁天1-2-3。帝王蟹地址：西區北堀江1-3-7。注意嵐山回程時間。'
             },
             {
                 id: 5,
                 date: '2026-02-03',
                 dayOfWeek: '二',
-                title: '滑雪日',
+                title: '六甲山滑雪',
                 location: '六甲山滑雪場',
                 mapLocation: '六甲山滑雪場',
                 icon: 'snowflake',
@@ -182,59 +195,62 @@
                     { time: '12:00', desc: '抵達六甲山滑雪場' },
                     { time: '16:00', desc: '滑雪體驗結束' }
                 ],
-                note: '記得帶防水手套、替換衣物。'
+                note: '記得帶防水手套、替換衣物。注意山區保暖。'
             },
             {
                 id: 6,
                 date: '2026-02-04',
                 dayOfWeek: '三',
-                title: '大阪歷史與文化 (負責：劉毅安)',
-                location: '大阪城 / 通天閣',
+                title: '大阪歷史名勝 (負責：劉毅安)',
+                location: '大阪城 / 通天閣 / 天神橋',
                 mapLocation: '大阪城天守閣',
                 icon: 'map-pin',
                 activities: [
-                    { time: '09:00', desc: '大阪城、豐國神社' },
-                    { time: '10:30', desc: '玉造稻荷神社' },
-                    { time: '12:00', desc: '大阪木津市場' },
-                    { time: '14:00', desc: '新世界本通商店街、通天閣' },
+                    { time: '09:00', desc: '大阪城 ➔ 玉造稻荷神社 ➔ 豐國神社' },
+                    { time: '12:00', desc: '新世界本通商店街 ➔ 通天閣' },
+                    { time: '14:00', desc: '大阪木津市場' },
                     { time: '16:00', desc: '天神橋筋商店街' }
                 ],
-                note: '行程較滿，注意時間掌控。'
+                note: '木津市場部分店家下午可能休息，建議確認時間。'
             },
             {
                 id: 7,
                 date: '2026-02-05',
                 dayOfWeek: '四',
-                title: '大阪市區漫遊 (負責：少倫)',
+                title: '天王寺文藝 & 道頓堀 (負責：少綸)',
                 location: '天王寺 / 道頓堀',
-                mapLocation: '道頓堀固力果跑跑人',
-                icon: 'shopping-bag',
+                mapLocation: '天王寺動物園',
+                icon: 'footprints',
                 activities: [
-                    { time: '上午', desc: '飯店出發' },
-                    { time: '10:00', desc: '天王寺動物園' },
-                    { time: '13:00', desc: '心齋橋逛街' },
-                    { time: '17:00', desc: '鈍屋拉麵' },
-                    { time: '19:00', desc: '道頓堀水上觀光船' },
-                    { time: '20:00', desc: '道頓堀夜遊' }
+                    { time: '10:00', desc: '飯店出發' },
+                    { time: '10:30', desc: '四天王寺' },
+                    { time: '11:30', desc: '一心寺' },
+                    { time: '12:30', desc: '午餐時間' },
+                    { time: '13:50', desc: '大阪市立美術館' },
+                    { time: '14:50', desc: '天王寺動物園' },
+                    { time: '17:30', desc: '道頓堀水上觀光船' },
+                    { time: '18:00', desc: '自由行 (心齋橋/跑跑人)' }
                 ],
-                note: '晚上可以看跑跑人看板，水上觀光船若有周遊卡可免費。'
+                note: '水上觀光船約20分鐘。美術館與動物園行程較緊湊，注意時間。'
             },
             {
                 id: 8,
                 date: '2026-02-06',
                 dayOfWeek: '五',
-                title: '大阪購物 (負責：陳奕安)',
-                location: '梅田 / 桃園機場',
+                title: '梅田最後購物 (負責：陳奕安)',
+                location: '梅田 / 關西機場',
                 mapLocation: 'HEP FIVE摩天輪',
-                icon: 'plane',
+                icon: 'shopping-bag',
                 activities: [
-                    { time: '上午', desc: '飯店退房' },
+                    { time: '上午', desc: '飯店退房 (寄放行李或帶著走)' },
                     { time: '10:00', desc: '阪急三番街' },
-                    { time: '12:00', desc: '購物中心 HEP FIVE' },
-                    { time: '18:00', desc: '抵達關西機場報到' },
+                    { time: '11:30', desc: '購物中心 HEP FIVE (摩天輪)' },
+                    { time: '13:30', desc: '阪急百貨梅田總店' },
+                    { time: '15:30', desc: '友都八喜 (Yodobashi) 梅田' },
+                    { time: '18:00', desc: '前往關西機場報到' },
                     { time: '20:45', desc: '啟航返台' }
                 ],
-                note: '注意行李重量，HEP FIVE 有紅色摩天輪地標。'
+                note: '最後一天購物請注意行李重量與機場交通時間。'
             }
         ];
 
@@ -261,6 +277,13 @@
         // --- 主程式邏輯 ---
 
         function init() {
+            // 強制更新 LocalStorage：如果版本號不符，載入新的 INITIAL_ITINERARY
+            if(localStorage.getItem('version_key') !== '2026_v3') {
+                state.itinerary = INITIAL_ITINERARY;
+                localStorage.setItem('trip_itinerary', JSON.stringify(INITIAL_ITINERARY));
+                localStorage.setItem('version_key', '2026_v3');
+            }
+            
             renderContent();
             updateTabStyles();
             updateChecklistBadge();
@@ -297,7 +320,7 @@
             state.selectedDayId = id;
             renderItinerary();
             
-            // 優化滑動體驗：平滑捲動到選中的日期
+            // 優化滑動體驗
             setTimeout(() => {
                 const btn = document.getElementById(`day-btn-${id}`);
                 if(btn) {
@@ -328,7 +351,7 @@
             const day = state.itinerary.find(d => d.id === state.selectedDayId);
             const mapQuery = getMapQuery(day);
 
-            // 1. 日期選擇器 (Sticky 效果)
+            // 1. 日期選擇器
             let daysHtml = `
                 <div class="sticky-container bg-gray-100/95 backdrop-blur-sm pt-4 pb-4 -mt-2 mb-2">
                     <div class="flex overflow-x-auto space-x-3 pb-2 scrollbar-hide -mx-2 px-2 snap-x scroll-smooth" style="scrollbar-width: none;">
@@ -521,7 +544,7 @@
         }
 
         function deleteChecklistItem(e, id) {
-            e.stopPropagation(); // 防止觸發勾選
+            e.stopPropagation();
             if(confirm('確定要刪除這個項目嗎？')) {
                 state.checklist = state.checklist.filter(i => i.id !== id);
                 saveChecklist();
