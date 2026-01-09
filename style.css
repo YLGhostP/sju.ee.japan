@@ -1,4 +1,10 @@
-/* 自定義捲軸隱藏 */
+/* --- 基礎設定 --- */
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    -webkit-tap-highlight-color: transparent; /* 移除手機點擊陰影 */
+}
+
+/* --- 隱藏捲軸 (預留類別) --- */
 .scrollbar-hide::-webkit-scrollbar {
     display: none;
 }
@@ -7,28 +13,93 @@
     scrollbar-width: none;
 }
 
-/* 動畫定義 */
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-.animate-fadeIn {
-    animation: fadeIn 0.3s ease-out forwards;
+/* --- 自定義橫向捲軸美化 (用於日期導覽) --- */
+.custom-scrollbar::-webkit-scrollbar {
+    height: 5px; /* 捲軸高度 */
 }
 
-/* Checkbox 打勾動畫 */
-.check-transition {
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+.custom-scrollbar::-webkit-scrollbar-track {
+    background: rgba(241, 245, 249, 0.5); /* 軌道顏色 (slate-100) */
+    border-radius: 10px;
+    margin: 0 20px;
 }
 
-/* Sticky 效果容器 */
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background: #cbd5e1; /* 滑塊顏色 (slate-300) */
+    border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8; /* 懸停時顏色加深 */
+}
+
+/* 確保在 Firefox 也能顯示基本樣式 */
+.custom-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: #cbd5e1 rgba(241, 245, 249, 0.5);
+}
+
+/* --- Sticky 效果容器 --- */
 .sticky-container {
     position: -webkit-sticky;
     position: sticky;
     top: 0;
     z-index: 30;
+    /* 配合 JS 中的 backdrop-blur-md 使用 */
 }
 
-body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+/* --- 動畫定義 --- */
+@keyframes fadeIn {
+    from { 
+        opacity: 0; 
+        transform: translateY(12px); 
+    }
+    to { 
+        opacity: 1; 
+        transform: translateY(0); 
+    }
+}
+
+.animate-fadeIn {
+    animation: fadeIn 0.4s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+/* --- 行前清單互動動畫 --- */
+.tab-transition {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Checkbox 與文字的平滑過渡 */
+.check-transition {
+    transition: all 0.3s ease;
+}
+
+/* 行程表時間軸的連接線微調 */
+.border-l-2 {
+    transition: border-color 0.3s ease;
+}
+
+/* --- 點擊按鈕反饋 --- */
+button:active {
+    transform: scale(0.96);
+}
+
+/* 日期按鈕磁吸滾動優化 */
+.snap-x {
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+}
+
+.snap-center {
+    scroll-snap-align: center;
+}
+
+/* --- Modal 毛玻璃與陰影優化 --- */
+#edit-modal {
+    transition: opacity 0.3s ease;
+}
+
+#edit-modal > div {
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
 }
